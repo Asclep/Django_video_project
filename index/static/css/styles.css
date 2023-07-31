@@ -1,0 +1,19 @@
+.controls {
+    visibility: hidden;
+    opacity: 0.5;
+    width: 600px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -300px;
+    background-color: black;
+    box-shadow: 3px 3px 5px black;
+    transition: 1s all;
+  }
+  
+.controls:hover{
+  opacity: 1;
+}
+
+.ui-icon-play {background:url('/media/icons/bofang.png') no-repeat 0 0;}

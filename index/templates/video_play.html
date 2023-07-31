@@ -1,0 +1,63 @@
+{% extends "basic_generic1.html" %}
+
+{% block title %}<title>{{video.title}} - {{video.author.username}}</title>{% endblock %}  {# 标题显示 #}
+
+{% block content %}
+<div class="container my-5 mx-5">
+    <div class="row">
+        <span class="col-9">
+            <div class="panel panel-info">
+                <div class="panel-heading mx-2">
+                    <h2 class="panel-title">{{video.title}}</h2>
+                    <p>{{video.sum}}
+                    </p>
+                </div>
+                <div class="panel-body mx-0 text-center embed-responsive embed-responsive-16by9">
+                    <video class="myvideo bg-dark" controls="controls" id="myvideo" cover> 
+                        <source src="/media/{{video.address}}" type="video/mp4"></source>
+                    </video>
+                    <!-- 控件开始 -->
+                    <div class="controls">
+                        <div class="row">
+                            <img class="play col-1 ml-2" src="/media/icons/bofang.png" alt="play" width="30">
+                            <img class="stop col-1 mx-1" src="/media/icons/tingzhi.png" alt="stop" width="30">
+                            <div class="timer col-3 text-center">
+                            <div></div>
+                            <span class="text-light" aria-label="timer">00:00</span>
+                            </div>
+                            <img class="rwd col-1 mx-1" src="/media/icons/houtui.png" alt="rewind" width="30">
+                            <img class="fwd col-1 mx-1" src="/media/icons/kuaijin.png" alt="fast forward" width="30">
+                            <img class="speed col-1 mx-1" src="/media/icons/1beisu.png" alt="1x speed" width="30">
+                            <img class="fullscreen col-1 mx-1" src="/media/icons/zuidahua.png" alt="full screen" width="30">
+                        </div>
+                    </div>
+                    <!-- 控件结束 -->
+                </div>
+                <div class="row mx-2 my-2">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <span class="glyphicon glyphicon-user col"></span>
+                        <input type="text" class="d-none" name="formid" value="1" />
+                        <button type="submit" >收藏</button>
+                    </form>
+                </div>
+            </div>
+        </span>
+        <span class="col-3">
+            <a href="/login/user/{{video.author.id}}/" class="text-decoration-none text-dark" target="_blank">
+                UP:{{video.author.username}}
+            </a>
+        </span>
+    </div>
+</div>
+
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+
+{% endblock %}
+<button class="play col-1 offset-sm-1 opacity-25" aria-label="play">

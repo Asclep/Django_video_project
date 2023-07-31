@@ -1,0 +1,82 @@
+{% extends "basic_generic2.html" %}
+
+{% block title %}<title>Rei -- {{user.username}}的个人主页</title>{% endblock %}
+
+{% block background %}
+{# 背景部分可在这里设置 #}
+{% endblock %}
+
+{% block content %}
+<div class="container-fruid my-5">
+    {% if is_user == "1" %}  {# 只有在查看自己主页的时候才显示 #}
+    <div class="h4 my-2">
+        收藏的视频
+    </div>
+    <div class='row'>
+        {% for favorite in favorites %}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body ">
+                    <a href="/index/video/{{favorite.video.id}}/" target="_blank">
+                        <img class="card-img-top" src="/media/{{favorite.video.cover}}" alt="Card image cap">  {# 视频的封面 #}
+                    </a>
+                    <a class="text-decoration-none text-body text-truncate" href="/index/video/{{favorite.video.id}}/" target="_blank ">  {# 视频的标题 #}
+                        <h5 class="card-title my-1"> {{favorite.video.title}} </h5>
+                    </a>
+                    <p class="card-text text-truncate my-1">
+                        <a class="text-decoration-none text-dark" href="/index/video/{{favorite.video.id}}/" target="_blank">  {# 视频的简介 #}
+                            <p><small>
+                            {{favorite.video.sum}}
+                            </small></p>
+                        </a>
+                    </p>
+                    <div class="card-text text-truncate row my-1">
+                        <span class="col">
+                            观看量：{{favorite.video.view_counts}}
+                        </span>
+                        <span class="col">
+                            收藏量：{{favorite.video.favorites_counts}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="h4 my-2">
+        上传的视频
+    </div>
+    <div class='row'>
+        {% for video in videos %}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body ">
+                    <a href="/index/video/{{video.id}}/" target="_blank">
+                        <img class="card-img-top" src="/media/{{video.cover}}" alt="Card image cap">  {# 视频的封面 #}
+                    </a>
+                    <a class="text-decoration-none text-body text-truncate" href="/index/video/{{video.id}}/" target="_blank ">  {# 视频的标题 #}
+                        <h5 class="card-title my-1"> {{video.title}} </h5>
+                    </a>
+                    <p class="card-text text-truncate my-1">
+                        <a class="text-decoration-none text-dark" href="/index/video/{{video.id}}/" target="_blank">  {# 视频的简介 #}
+                            <p><small>
+                            {{video.sum}}
+                            </small></p>
+                        </a>
+                    </p>
+                    <div class="card-text text-truncate row my-1">
+                        <span class="col">
+                            观看量：{{video.view_counts}}
+                        </span>
+                        <span class="col">
+                            收藏量：{{video.favorites_counts}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

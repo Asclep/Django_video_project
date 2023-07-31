@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    {% block title %}<title>Rei Index</title>{% endblock %}
+    <meta charset="utf-8">
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- jQuery and JavaScript Bundle with Popper -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Add additional CSS in static file -->
+    {% block background %}
+    <style>
+        body {
+            background: url(../../media/icons/background.png) no-repeat;
+            background-position: top center;
+            background-size: cover;
+        }
+    </style>
+    {% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '../static/css/styles.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid ">
+        <!--顶部的导航栏-->
+        {% block nav_top_bar %}
+        <nav class="nav navbar-expand-lg bg-light py-3 sticky-top align-self-center flex text-center">
+            <span class="nav navbar-nav col-center-block mx-5 offset-3">
+                <a class="navbar-brand" href="/index/">
+                    <img src="/media/icons/logo.png" class="img" heihgt=15px width=15px> Ailiaili
+                </a>
+            </span>
+            <span class="nav navbar-nav navbar-left col-7 offset-2 align-self-center justify-content-end px-5">
+                <ul class="nav navbar-nav justify-content-center">
+                {% if is_user == '1' %}
+                <li><a href="#"><span class="glyphicon glyphicon-log-in col"></span>{{user.username}}</a></li>
+                <li><a href="/index/upload/video/"><span class="glyphicon glyphicon-log-in col"></span>上传视频</a></li>
+                <li>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <span class="glyphicon glyphicon-user col"></span>
+                        <input type="text" class="d-none" name="formid" value="1" />
+                        <button type="submit" >登出</button>
+                    </form>
+                </li>
+                {% else %}
+                    <a class="nav-link col" href="/index/" target="_blank">主页</a>
+                {% endif %}
+        </nav>
+        {% endblock %}
+        <!--中间的内容，需要自行填充-->
+        <div class="container justify-content-center">
+            {% block content %}
+                <div>
+                    中间的内容，需要自行填充。<br>
+                    现在我们有0000个用户已注册。<br>
+                    {% for n in i %}
+                        {{n}}<br>
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>
