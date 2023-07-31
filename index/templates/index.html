@@ -1,0 +1,44 @@
+{% extends "basic_generic1.html" %}
+
+{% block content %}
+    <div class="container-fruid mx-5 mt-3">
+        <div class="row">
+        {% for video in videos %}   <!--每一个视频的卡片-->
+            <div class="col-sm-3">
+                <div class="card mb-3">
+                    <div class="card-body ">
+                        <a href="/index/video/{{video.id}}/" target="_blank">
+                            <img class="card-img-top" src="/media/{{video.cover}}" alt="Card image cap">  {# 视频的封面 #}
+                        </a>
+                        <a class="text-decoration-none text-body text-truncate" href="/index/video/{{video.id}}/" target="_blank ">  {# 视频的标题 #}
+                            <h5 class="card-title my-1"> {{video.title}} </h5>
+                        </a>
+                        <p class="card-text text-truncate my-1">
+                            <a class="text-decoration-none text-dark" href="/index/video/{{video.id}}/" target="_blank">  {# 视频的简介 #}
+                                <p><small>
+                                {{video.sum}}
+                                </small></p>
+                            </a>
+                        </p>
+                        <div class="card-text text-truncate row my-1">
+                            <span class="col">
+                                观看量：{{video.view_counts}}
+                            </span>
+                            <span class="col">
+                                收藏量：{{video.favorites_counts}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+{% endblock %}

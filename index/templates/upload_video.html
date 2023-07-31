@@ -1,0 +1,44 @@
+{% extends "basic_generic1.html" %}
+
+{% block content %}
+
+<div class="container align-self-center" style="padding-top:100px">
+    <div class="row justify-content-center">
+        <div class="col col-4 my-8 border rounded bg-light p-4">
+            <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="video_title">视频标题</label>
+                    <input type="text" class="form-control" id="video_title" name="video_title" maxlength="40" required>
+                </div>
+                <div class="form-group">
+                    <label for="video_sum">视频简介</label>
+                    <textarea type="text" class="form-control" rows="3" id="video_sum" name="video_sum" maxlength="500" required>请在此处输入视频简介(最多500字符)</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="video_file">上传视频</label>
+                    <input type="file" class="form-control border-0 bg-transparent" id="video_file" name="video_file" required>
+                </div>
+                <div class="form-group">
+                    <label for="video_cover">上传封面</label>
+                    <input type="file" class="form-control border-0 bg-transparent" id="video_cover" name="video_cover" required>
+                </div>
+                <div class="form-group">
+                    <div class="container justify-content-center text-center">
+                        <button type="submit" class="btn btn-primary center">上传</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "basic_generic2.html" %}
+
+{% block content %}
+<div class="container align-self-center" style="padding-top:100px">
+    <div class="row justify-content-center">
+        <div class="col col-4 my-8 border rounded bg-light p-4">
+            <form action="" method="POST">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="userpassword">密码</label>
+                    <input type="password" class="form-control" id="userpassword" name="userpassword" required>
+                </div>
+                <div class="form-group">
+                    <div class="container justify-content-center text-center">
+                        <button type="submit" class="btn btn-primary center">登录</button>
+                    </div>
+                </div>
+                <div>
+                    <a class="nav-link col" href="/login/send_email/">忘记密码？</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+
+{% endblock %}
