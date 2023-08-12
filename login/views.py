@@ -119,7 +119,7 @@ def send_email(request):
             mail.send_mail(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
             # 将验证码信息存入库中
             Verification.objects.create(email=email, code=va)
-            return redirect('/login/send_email/')
+            return redirect('/login/new_psw/')
         else:
             var = {}  # 传递到前端的变量
             messages.error(request, '用户不存在')
@@ -154,7 +154,7 @@ def psw_rst(request):
                 else:
                     user.password = make_password(userpassword)
                     user.save()
-                    vers = Verification.objects.filter(gen_time__lt = now).get()
-                    vers.delete()
+                    for vers in Verification.objects.filter(gen_time__lt = now).all():
+                        vers.delete()
                     messages.error(request, '修改成功,请登录')
                     return redirect('/login/')

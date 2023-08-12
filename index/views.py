@@ -48,6 +48,13 @@ def upload_video(request):
     '''用户上传视频'''
     var = {}
     if request.method == "GET":
+        user = request.user # 获取当前用户
+        if user.username != '':
+            is_user = '1'
+        else:
+            is_user = '0'
+        var.update({'is_user':is_user})
+        var.update({'user':user})
         return render(request, 'upload_video.html', context=var)
     elif request.method == 'POST':
         # 变量获取
@@ -58,11 +65,16 @@ def upload_video(request):
         user = request.user
 
         if not user:  # 用户未登录
-            return render(request, 'upload_video.html', context=var)
+            return redirect('/index/')
         
-        video_exist = '0'
-        if Videos.objects.filter(title=video_title):
+        video_exist = '0'  
+        if Videos.objects.filter(title=video_title):  # 有相同标题的视频
             video_temp = Videos.objects.filter(title=video_title).get()  # 提取有相同标题的视频
+            if video_temp.author.id == user.id:  # 是本人上传的视频
+                video_temp.delete()
+            else:
+                messages.error(request, '视频标题重复')
+                return redirect('/index/upload/video/')         
         else:
             video_exist = '1'
                 
@@ -74,15 +86,15 @@ def upload_video(request):
             video_obj = Videos.objects.create(id=video_id, author=user, title=video_title, sum=video_sum, address=video_file, cover=video_cover, state='n')
             if video_obj:
                 messages.error(request, '上传成功')
-                return render(request, 'upload_video.html', context=var)
+                return redirect('/index/')
         else:  # 是本人上传的视频，对原有视频做修改
             video_obj =Videos.objects.create(author=user, title=video_title, sum=video_sum, address=video_file, cover=video_cover, state='n')
             if video_obj:
                 messages.error(request, '上传成功')
-                return render(request, 'upload_video.html', context=var)
+                return redirect('/index/')
         
     messages.error(request, '上传失败')
-    return render(request, 'upload_video.html', context=var)
+    return redirect('/index/upload/video/')
 
 def video_play(request,v_id):
     '''视频播放'''

@@ -43,11 +43,15 @@ rwd.addEventListener("click", mediaBackward);
 fwd.addEventListener("click", mediaForward);
 
 function mediaBackward() {  // 视频的回退函数
-  media.currentTime -= 5;
+  if(media.currentTime != 0){
+    media.currentTime -= 5;
+  }
 }
 
 function mediaForward() {  // 视频的快进函数
+  if(media.currentTime != 0){
     media.currentTime += 5;
+  }
 }
 
 /* 视频的倍速 */
@@ -95,7 +99,7 @@ function setTime() {
     secondValue = seconds;
   }
 
-  var mediaTime = minuteValue + ":" + secondValue;
+  var mediaTime = minuteValue + ":" + secondValue + "/";
   timer.textContent = mediaTime;
 
 }
